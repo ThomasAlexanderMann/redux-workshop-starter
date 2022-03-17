@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-image: url('../public/backgrond.jpg');
+  background-size: cover;
+  background-color: rgb(210, 52, 250);
+  background-blend-mode: overlay;
 }
 
 .App-logo {
@@ -15,7 +19,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,15 +28,72 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+label {
+  font-size: 2rem;
+}
+input {
+  box-sizing: border-box;
+  height: 2rem;
+  width: 15rem;
+  vertical-align: middle;
+  font-size: 1.5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  box-sizing: border-box;
+  height: 2rem;
+  width: 4rem;
+  background-color: blue;
+  color: #fff;
+  font-size: 1.5rem;
+  vertical-align: middle;
 }
+
+button.delete {
+  width: 8rem;
+  background-color: rgb(210, 52, 250);
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.add-todo {
+  box-sizing: border-box;
+  padding: 1rem;
+  height: 100px;
+  background-color: rgba(220, 220, 220, 0.746);
+  width: 600px;
+  margin: auto;
+  background: blur(10px);
+}
+
+
+.todo-container {
+  box-sizing: border-box;
+  width: 600px;
+  height: calc(100vh - 160px);
+  margin: auto;
+  background-color: rgba(220, 220, 220, 0.746);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
+}
+.text-cont {
+  height: 3rem;
+}
+
+.todo {
+  width: 80%;
+  min-height: 100px;
+  margin: .5rem;
+  border-radius: 5px;
+  background-color: #282c34;
+  color: #fff;
+}
+.todo p {
+  font-size: 1.5rem;
+}
+
+
+
