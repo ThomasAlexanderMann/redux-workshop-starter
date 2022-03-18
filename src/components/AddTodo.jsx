@@ -1,12 +1,25 @@
 import React, { useState } from "react";
+// Imports for redux
+import { useDispatch } from "react-redux";
+// this library creates unique IDs:
+import {v4} from 'uuid'
 
-export default function AddTodo({addNewTodo}) {
-    const [todoText, setTodoText] = useState("");
+
+export default function AddTodo() {
+	const [todoText, setTodoText] = useState("");
+	const dispatch = useDispatch()
     
     function handleAddTodo(e) {
         e.preventDefault()
-        addNewTodo(todoText)
-        setTodoText("")
+		setTodoText("")
+		dispatch({
+			type: 'todos/todoAdded',
+			payload: {
+				id: v4(),
+				text: todoText,
+				status: 'incomplete'
+			}
+		})
     }
 
 	return (

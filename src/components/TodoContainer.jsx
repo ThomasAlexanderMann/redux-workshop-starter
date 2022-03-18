@@ -1,18 +1,30 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Todo from './Todo'
-export default function TodoContainer({todos, deleteTodo, setTodoStatus}) {
-	const [filter, setFilter] = useState(false)
-	
+
+
+export default function TodoContainer() {
+	const dispatch = useDispatch()
+	// Selector to get the array of todos from state
+	const todosList = useSelector(state => state.todos)
+	const filterActive = useSelector(state => state.filter.filterActive)
+	function toggleFilter() {
+		dispatch({type: 'filter/toggleFilter'})
+	}
+
 	function filterTodos(todos) {
-		if (filter) {
+		if (filterActive) {
 			return todos.filter(todo => todo.status === 'completed')
 		}
 		return todos
 	}
+	// Now we just map our todos and pass down the data for each todo.
+	// We could optimise this further and just pass down IDs, then select data in each todo
+	
   return (
 	  <div className="todo-container">
-		  <button onClick={() => setFilter(!filter)} style={{width: "15rem", backgroundColor: 'rebeccapurple'}}>Filter by complete</button>
-          {filterTodos(todos).map((todo, index) => <Todo key={index} index={index} text={todo.text} status={todo.status} deleteTodo={deleteTodo} setTodoStatus={setTodoStatus} />)}
+		  <button onClick={toggleFilter} style={{width: "15rem", backgroundColor: 'rebeccapurple'}}>Filter by complete</button>
+		  {filterTodos(todosList).map((todo, index) => <Todo key={index} todoData={todo}/>)}
 		</div>
 	);
 }
