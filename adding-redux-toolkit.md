@@ -123,3 +123,11 @@ This is the recommended way to implement redux in an app. Our application is sim
     - Marvel at the world's best Redux app.
 
 
+
+# Fetching data from the server:
+We're using json-server to mock a server for this workshop, but the logic will be the same for a real server. The 'database' is held in `db.json`.
+
+Before you get started, start the json server using `json-server --watch db.json`
+
+
+

@@ -1,0 +1,19 @@
+{
+    "todos": [
+        {
+            "id": "123abc",
+            "text": "Here's a todo from the server",
+            "status": "incomplete"
+        },
+        {
+            "id": "123abc65566",
+            "text": "Here's another todo from the server",
+            "status": "complete"
+        },
+        {
+            "id": "12gtrgth3abc",
+            "text": "Here's yet another todo from the server",
+            "status": "incomplete"
+        }
+    ]
+}
