@@ -14,7 +14,12 @@ function App() {
 	}
 
   function addNewTodo(text) {
-	  setTodos([...todos, text]);
+	  setTodos([...todos, { text, status: 'incomplete' }]);
+  }
+	function setTodoStatus(index, status) {
+		const updatedTodos = [...todos]
+		updatedTodos[index].status = status
+		setTodos(updatedTodos)
 	}
 
 	return (
@@ -23,7 +28,7 @@ function App() {
 				<h1>Stuff to Do</h1>
 			</header>
 			<AddTodo addNewTodo={addNewTodo} />
-			<TodoContainer deleteTodo={deleteTodo} todos={todos} />
+			<TodoContainer deleteTodo={deleteTodo} setTodoStatus={setTodoStatus} todos={todos} />
 		</div>
 	);
 }
