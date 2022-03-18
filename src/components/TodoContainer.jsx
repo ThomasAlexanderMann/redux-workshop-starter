@@ -1,18 +1,26 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Todo from './Todo'
-export default function TodoContainer({todos, deleteTodo, setTodoStatus}) {
-	const [filter, setFilter] = useState(false)
+
+import { selectTodos } from '../redux/todosSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectFilterStatus, toggleFilter } from '../redux/filterSlice'
+
+export default function TodoContainer() {
+	const dispatch = useDispatch()
+	const filterActive = useSelector(selectFilterStatus)
+	const todosFromStore = useSelector(selectTodos)
+	
 	
 	function filterTodos(todos) {
-		if (filter) {
+		if (filterActive) {
 			return todos.filter(todo => todo.status === 'completed')
 		}
 		return todos
 	}
   return (
 	  <div className="todo-container">
-		  <button onClick={() => setFilter(!filter)} style={{width: "15rem", backgroundColor: 'rebeccapurple'}}>Filter by complete</button>
-          {filterTodos(todos).map((todo, index) => <Todo key={index} index={index} text={todo.text} status={todo.status} deleteTodo={deleteTodo} setTodoStatus={setTodoStatus} />)}
+		  <button onClick={() => dispatch(toggleFilter())} style={{width: "15rem", backgroundColor: 'rebeccapurple'}}>Filter by complete</button>
+          {filterTodos(todosFromStore).map((todo, index) => <Todo key={index} todoData={todo} />)}
 		</div>
 	);
 }

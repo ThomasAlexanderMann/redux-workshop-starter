@@ -1,11 +1,21 @@
 import React, { useState } from "react";
+import {useDispatch} from 'react-redux'
+//import redux actions
+import { todoAdded } from "../redux/todosSlice";
+// uuid v4 to create ids
+import { v4 } from 'uuid'
 
 export default function AddTodo({addNewTodo}) {
-    const [todoText, setTodoText] = useState("");
+	const [todoText, setTodoText] = useState("");
+	const dispatch = useDispatch()
     
     function handleAddTodo(e) {
         e.preventDefault()
-        addNewTodo(todoText)
+		dispatch(todoAdded({
+			id: v4(),
+			text: todoText,
+			status: 'incomplete'
+		}))
         setTodoText("")
     }
 
