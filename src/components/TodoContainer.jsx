@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Todo from './Todo'
 
-import { selectTodos } from '../redux/todosSlice'
+import { selectTodos, loadTodos } from '../redux/todosSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectFilterStatus, toggleFilter } from '../redux/filterSlice'
 
@@ -9,6 +9,12 @@ export default function TodoContainer() {
 	const dispatch = useDispatch()
 	const filterActive = useSelector(selectFilterStatus)
 	const todosFromStore = useSelector(selectTodos)
+
+	useEffect(() => {
+		dispatch(loadTodos())
+	}, [])
+
+
 	
 	
 	function filterTodos(todos) {

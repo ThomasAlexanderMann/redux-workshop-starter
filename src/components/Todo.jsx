@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { updateStatus, deleteTodo } from '../redux/todosSlice'
+import { updateTodo, deleteTodo } from '../redux/todosSlice'
 
 export default function Todo({ todoData }) {
   const dispatch = useDispatch()
@@ -11,7 +11,7 @@ export default function Todo({ todoData }) {
             <p>{todoData.text}</p>
           </div>
       <button onClick={() => dispatch(deleteTodo(id))} className='delete'>Delete</button>
-      <select value={todoData.status} onChange={e => dispatch(updateStatus({id, status: e.target.value}))}>
+      <select value={todoData.status} onChange={e => dispatch(updateTodo({id, status: e.target.value}))}>
         <option value="incomplete">Incomplete</option>
         <option value="completed">Completed</option>
       </select>

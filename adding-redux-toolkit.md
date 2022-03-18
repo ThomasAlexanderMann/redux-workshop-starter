@@ -129,5 +129,97 @@ We're using json-server to mock a server for this workshop, but the logic will b
 
 Before you get started, start the json server using `json-server --watch db.json`
 
+Let's convert our app to fetch, retrieve and edit todos on the server:
+
+    1. Inside `todosSlice.js`:
+    import `createAsyncThunk` from `@reduxjs/toolkit`
+
+    2. Let's create a thunk to fetch todos:
+        `createAsyncThunk` take two parameters, an type string that will be dispatched to the store, and an action creator to create a payload.
+        ```
+        const loadTodos = createAsyncThunk('todos/loadTodos', async () => {
+            const response = await fetch("http://localhost:3000/todos");
+            const todos = await response.json()
+            console.log(todos)
+            return todos
+        })
+        ```
+    3. `createSlice` doesn't make a reducer to deal with this thunk, so we add the reducers to the 'extraReducers' field in our slice object. We can user the 'builder' syntax to create reducers that deal with the pending, fulfilled and rejected responses we might get from the server. `createAsyncThunk` lets us handle all these cases as it deals with the async logic involved in fetching from the server:
+
+    ```
+     extraReducers: builder => {
+        builder
+            .addCase(loadTodos.fulfilled, (state, action) => {
+            return action.payload
+        })
+
+    ```
+    We could add extra logic here to handle loading or failed states, then show these in the UI.
+
+    In `extraReducers`, we can either modify the state directly, or return a new state. Here's the full logic for the final app:
+    ```
+    extraReducers: builder => {
+        builder
+            .addCase(loadTodos.fulfilled, (state, action) => {
+           
+            return action.payload
+            })
+            .addCase(deleteTodo.fulfilled, (state, action) => {
+                console.log(action)
+                const newState = state.filter(todo => todo.id !== action.payload)
+                return newState
+            })
+            .addCase(updateTodo.fulfilled, (state, action) => {
+                const {id, status} = action.payload
+            state.find(todo => todo.id === id).status = status
+            })
+            .addCase(addTodo.fulfilled, (state, action) => {
+                state.push(action.payload)
+                
+        })
+    ```
+
+    4. Let's write the logic for deleting and updating todos.
+
+    5. We'll import our 'loadTodos' function into the `TodoContainer`.
+    We dispatch this inside a `useEffect` call so that the component starts loading todos when it is rendered.
+
+    ```
+        useEffect(() => {
+            dispatch(loadTodos())
+        })
+    ```
+
+    6. We'll also update the `AddTodo` and `Todo` components:
+    ```
+    // Inside AddTodo.jsx
+     function handleAddTodo(e) {
+        e.preventDefault()
+		dispatch(
+			addTodo({
+				id: v4(),
+				text: todoText,
+				status: "incomplete",
+			})
+		);
+        setTodoText("")
+    }
+
+
+    ```
+
+    ```
+    // Inside Todo.jsx
+    <button onClick={() => dispatch(deleteTodo(id))} className='delete'>Delete</button>
+      <select value={todoData.status} onChange={e => dispatch(updateTodo({id, status: e.target.value}))}>
+
+    ```
+    7. Continue in the same way, and we should have a fully working app!
+
+
+
+
+
+
 
 
