@@ -5,7 +5,7 @@ import { addTodo } from "../redux/todosSlice";
 // uuid v4 to create ids
 import { v4 } from 'uuid'
 
-export default function AddTodo({addNewTodo}) {
+export default function AddTodo() {
 	const [todoText, setTodoText] = useState("");
 	const dispatch = useDispatch()
     

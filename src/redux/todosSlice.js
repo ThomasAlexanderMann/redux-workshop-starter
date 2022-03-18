@@ -35,7 +35,7 @@ export const addTodo = createAsyncThunk('todos/addTodo', async ({id, text, statu
         body: reqBody
     });
     console.log(response)
-    return { id, text, status };
+    return { id, text: text, status };
 })
 
 
@@ -74,6 +74,7 @@ const todosSlice = createSlice({
             state.find(todo => todo.id === id).status = status
             })
             .addCase(addTodo.fulfilled, (state, action) => {
+                console.log(action)
                 state.push(action.payload)
                 
         })
