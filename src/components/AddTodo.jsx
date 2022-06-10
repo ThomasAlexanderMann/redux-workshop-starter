@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 //import redux actions
-import { todoAdded } from "../redux/todosSlice";
+import { addTodo } from "../redux/todosSlice";
 // uuid v4 to create ids
 import { v4 } from "uuid";
 
@@ -12,7 +12,7 @@ export default function AddTodo({ addNewTodo }) {
   function handleAddTodo(e) {
     e.preventDefault();
     dispatch(
-      todoAdded({
+      addTodo({
         id: v4(),
         text: todoText,
         status: "incomplete",
@@ -20,7 +20,7 @@ export default function AddTodo({ addNewTodo }) {
     );
 
     console.log(
-      todoAdded({
+      addTodo({
         id: v4(),
         text: todoText,
         status: "incomplete",

@@ -1,45 +1,84 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-// First, create the thunk
-export const getTodosFromServer = createAsyncThunk(
-  "todos/getTodosFromServer",
-  async () => {
-    const response = await fetch("http://localhost:3000");
-    console.log("response: ", response);
-    console.log("data: ", response.data);
-    return response.data;
+/* ---- Get the Array of Todos from the server ---- */
+export const getTodos = createAsyncThunk("todos/getTodos", async () => {
+  return fetch("http://localhost:3000/todos")
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    });
+});
+
+/* ---- add todo to the server ---- */
+export const addTodo = createAsyncThunk("todos/addTodo", async (newTodo) => {
+  fetch("http://localhost:3000/todos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newTodo),
+  });
+  return newTodo;
+});
+
+/* ---- delete todo from the server ---- */
+export const deleteTodo = createAsyncThunk(
+  "todos/deleteTodo",
+  async (todoID) => {
+    await fetch(`http://localhost:3000/todos/${todoID}`, {
+      method: "DELETE",
+    });
+    return todoID;
+  }
+);
+
+/* ---- update todo complete status on the server ---- */
+export const updateTodo = createAsyncThunk(
+  "todos/updateTodo",
+  async ({ id, status }) => {
+    fetch(`http://localhost:3000/todos/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: status }),
+    });
+    return { id, status };
   }
 );
 
 const todosSlice = createSlice({
   name: "todos",
   initialState: [],
-  reducers: {
-    todoAdded(state, action) {
-      // Remember, state at this level is an array of todos!
-      // The payload will be a new todo object
-      state.push(action.payload);
-      console.table(JSON.parse(JSON.stringify(state)));
-    },
-    deleteTodo(state, action) {
-      // take an ID
-      return state.filter((todo) => todo.id !== action.payload);
-    },
-    updateStatus(state, action) {
-      // payload should be an id and a new status
-      const { id, status } = action.payload;
-      state.find((todo) => todo.id === id).status = status;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(getTodosFromServer.fulfilled, (state, action) => {
-      // Add user to the state array
-      console.log("fulfilled");
-    });
+    builder
+      .addCase(getTodos.fulfilled, (state, action) => {
+        // in this slice state is always just the todo array
+        // replace the current todo array with new todo array from the server
+        const todoArrayFromServer = [...action.payload];
+        return todoArrayFromServer;
+      })
+      .addCase(addTodo.fulfilled, (state, action) => {
+        // add the new Todo to the todo array
+        state.push(action.payload);
+      })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        const deleteID = action.payload;
+        // filter out the todo that has been deleted on the server
+        const updatedState = state.filter((todo) => todo.id !== deleteID);
+        return updatedState;
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        const { id, status } = action.payload;
+        // find the todo with the id and assign new status
+        state.find((todo) => {
+          return todo.id === id;
+        }).status = status;
+      });
   },
 });
 
 export default todosSlice.reducer;
 
-export const { todoAdded, deleteTodo, updateStatus } = todosSlice.actions;
+export const { todoAdded, updateStatus } = todosSlice.actions;

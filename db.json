@@ -1,19 +1,29 @@
 {
-    "todos": [
-        {
-            "id": "123abc",
-            "text": "Here's a todo from the server",
-            "status": "incomplete"
-        },
-        {
-            "id": "123abc65566",
-            "text": "Here's another todo from the server",
-            "status": "complete"
-        },
-        {
-            "id": "12gtrgth3abc",
-            "text": "Here's yet another todo from the server",
-            "status": "incomplete"
-        }
-    ]
+  "todos": [
+    {
+      "id": "71dc7508-0da1-4009-9f70-dfc23380566b",
+      "text": "dsadsa",
+      "status": "incomplete"
+    },
+    {
+      "id": "5d43e0cf-301e-4d6b-a9e8-289c4d6c89aa",
+      "text": "dsadsa",
+      "status": "completed"
+    },
+    {
+      "id": "85aa89a1-fc98-431d-8f32-1073cc054d46",
+      "text": "dsadsa",
+      "status": "completed"
+    },
+    {
+      "id": "f59fce22-cc6f-480f-95d5-12ead0809940",
+      "text": "clean toilet",
+      "status": "incomplete"
+    },
+    {
+      "id": "93279d01-ac34-43d9-bb17-d65e76a9388f",
+      "text": "new todo",
+      "status": "incomplete"
+    }
+  ]
 }
