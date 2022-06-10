@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // First, create the thunk
-const getTodosFromServer = createAsyncThunk(
+export const getTodosFromServer = createAsyncThunk(
   "todos/getTodosFromServer",
   async () => {
     const response = await fetch("http://localhost:3000");
-    console.log(response);
+    console.log("response: ", response);
+    console.log("data: ", response.data);
     return response.data;
   }
 );

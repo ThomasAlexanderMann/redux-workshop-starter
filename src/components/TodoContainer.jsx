@@ -1,7 +1,7 @@
 import React from "react";
 import Todo from "./Todo";
 
-import { selectTodos } from "../redux/todosSlice";
+import { getTodosFromServer } from "../redux/todosSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectFilterStatus, toggleFilter } from "../redux/filterSlice";
 
@@ -9,9 +9,10 @@ export default function TodoContainer() {
   const dispatch = useDispatch();
   const filterActive = useSelector(selectFilterStatus);
 
+  /* ---- Get the todos ---- */
   // send a dispatch that sends the API request and populates the todos in redux store when it comes back fulfilled
-
-  // look in state for the todos
+  dispatch(getTodosFromServer());
+  // look in state for the todos in the redux store
   const todosFromStore = useSelector((state) => state.todos);
 
   function filterTodos(todos) {
